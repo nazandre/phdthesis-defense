@@ -1,0 +1,450 @@
+[file]
+andre-naz-phdthesis-defense.pdf
+[font_size]
+19926
+[notes]
+### 1
+Today, I will present you the work I've done during my PhD under the supervision of J. B, Seth Goldtsein and B. Piranda on the topic of "Distributed Algorithms for Large-scale robotic ensembles: centrality, synchronization and self-reconfiguration."
+
+### 2
+Here is the outline of my talk. I will first introduce the context, state the problem, then present my contributions in the three topics I studied in my thesis, namely centrality-based leader election, time synchronization, self-reconfiguration. Then, I will conclude this presentation and present some of the future works.
+
+### 3
+My thesis focuses on large-scale robotic ensembles. This subset is actually part of wide domains of research. It belongs to the Internet of Things, that is to say the smart and connected objetcs that can compute and sense the world. More precisely they are included in the Internet of Robotic things that are the Internet of Things objects that have actuators to act over the world.
+
+Large-scale robotic ensembles include modular robotics, swarm robotics, distributed MEMS and robotic materials.
+
+Here are two examples of such systems. My work is actually part of these projects. The first one is a conveying surface composed of many modular robotic systems. This surface can sort and convey small objects. The second one is programmable matter, a matter than can change its physical properties on-demand. This matter is form from up to millions of small modular robots.
+
+These objects can be seen from two perspectives. At the macro-scale there are reconfigurable IoRT objects. At the micro-scale there are self-organized ensembles of thousands to millions of small and resource-constrained modules.
+
+These systems have several advantages over traditionnal robotics. First, they are more versatile, the conveying surface can be re-shaped in order to adapt the surface to new conditions. The programmable matter can be endlessly re-shaped. They are also more robust, any module can replace another. Cheaper because they are composed of identical and mass produced robots.
+
+### 4
+
+Researchers from different communities are involved in the realization of these large-scale robotic ensembles, namely the distributed syetms, the networking, the artificial intelligence and the robotics communities. At a high level, there are two main challenges in the realization of these ensembles: the fabrication of the individual robotic units and the algorthimic challenge that lies in the coordination of these large-scale ensembles.
+
+In my thesis, I worked on the distribtued coordination of modular robotic systems.
+
+People from the distribtued systems, networking and artificial intelligence communities address the coordination problem with different perspectives. This thesis is more oriented networking. I propose algorithms and evaluate them on large-scale systems. I use both hardware deployment and simulations, thus it slighlty intersects with the robotic approach. Moreover, I provide some complexity analysis and termination proof, so it also slightly interescts with the distributed systems approach.  
+
+### 5
+
+The distributed coordination of large-scale robotic ensembles pose significant algorithmic challenges especially because of the scale of these systems and because robots are resource-constrained.
+
+I defend the thesis that we need to identify and design primitives to coordinate these ensembles.
+
+I will illustrate my presentation using an application scenario. This scenario is only used for illustration, my contributions can be applied in other situations.
+
+In this scenario, an initial random clumb of 2D Catoms cooperatively self-reorganize into a car shape object. Moreover, the modules in the turn-signals are synchronously blinking.
+
+This scenario rises three research problems that are the problems I address during my thesis, namely the shape construction problem, the time synchronization problem for synchronous Blinking.  And centrality-based leader election problem. I will explain later why.
+
+We will look at each of this problem one-by-one starting in the reverse order.
+
+### 6
+
+As I said, I applied my work to real modular robotic platforms. I will thus present the hardware and simulation tools I had at my disposal during my thesis.
+
+### 7
+
+The first platform is the Blinky Blocks. This platform was designed at Carnegie Mellon University. They are now produced here at FEMTO-ST.
+
+Here is an ensembles of connected Blinky Blocks. Modules are attached together using magnets. Every block is equipped with its own but limited computationnal and communication capabilites. A module can communicate with its physical neighbors. The blocks can also glow with different colors thanks to leds. The aim is to make them coordinate their actions to achieve a global task.
+
+### 8
+
+The second platform is the 2D Catoms. These 1-mm diameter rolling robots have also been designed at CMU. A hardware prototype has been physically frabicated. Here it is rolling on the ground. The motion capabilites have been realized however, the communication, module arrangement part and the potential integration of leds for colors have been let for future works.
+
+Hence, we use simulations to evaluate algorithms on this platform.
+
+### 9
+
+We perform simulation evaluation on VisibleSim. This simulator is developped here in our team. We use the simulator to evaluate algorithms on large-scale robotic ensembles of 2D Catoms and Blinky Blocks, or on systems for which we do not have hardware at our disposal, for instance the 2D Catoms.
+
+### 10
+
+I will now present you my work on centrality-based leader election. I use the same outline for all the contribution section. First I will introduce the problem and motivate it, then I will present the related work and my contribution. Then, I present experimental results before concluding the section.
+
+### 11
+
+Initially, we have an ensemble of connected robots that form a network graph, in which modules can only communicate with their immediate neighbors. We will use the general concepts of graph theory such as the distance between modules.
+
+Our problem is to efficiently elect a central node.
+
+The first question is: what is a central node?
+
+Many centrality definition have been proposed. In this thesis, we consider two types of central nodes. The first one is the center. It is the set of nodes that minimize the maximum distance to all the others. The second one is the centroid. That is are the nodes that minimize the average distance to all the others. In this system, the center is shifted on the left because it is by definition influenced by this long line. The centroid is more on the right because it is influenced by this group of modules.
+
+Finding these nodes is difficult because it requires a distributed all-pair shortest path computation which needs a large amount of time and/or and has a high storage cost.
+
+It is however interesting to locate these nodes as they are ideal nodes for communication with all the others. They can be used as service providers. For instance, in time synchronization protocol with a time master, the precision decreases with the hop distance to the time master. Hence, placing the time master at a central position increases the synchronization precision.
+
+### 13
+
+Different algorithms to elect central nodes have already been proposed.
+
+In my thesis I proposed three approximation. Their advantages regadring the state of the art is to have a good cost-accuracy tradef-off. They provide a better accuracy than the existing algorithms while having only a slighlty higher cost in terms of time and messages and a satisfactory memory usage.
+
+### 14
+
+More precisely, my contributions in this topic is to propose 3 distributed algorithms, namely the k-BFS SumSweep, ABC-Center and the Probabilistic Counter based Central Leader Election (PC2LE) algorithms. We propose two version of ABC-Center.
+
+These algorithms are inspired from existing external-graph analysis algorithms which are based on intuitive heuristics.
+
+I perform an experimental evaluation of the accuracy in our modular robotic systems. I also provide a formal analysis of the performance in terms of cost. I won't enter too much in details, but it is intersting to node that our algorithms have a time complexity equal to a variable times the diameter of the system. This variable is usually small. It is also intersting to note that the memory usage is bounded by the number of neighbors (plus the usage of a probabilistic counter for PC2LE).
+
+### 15
+
+For several reasons, I will only describe ABC-Center. It is first because we are short on time, then because it is the algorithm we have implemented on hardware and finally because it is the more visiual of our algorithms.
+
+Nevertheless,  will present results for all my algorithms in the evaluation section.
+
+### 16
+
+ABC-Center extends the MiniMax algorithm proposed for tree graphs.
+
+The general idea of ABC-Center is that the center stands at the middle of a longest path in the system.
+
+For instance, in this system, B-C is a diameter and the center is the node at mid-distance between these two nodes.
+
+But it is not as simple. For instance, in this square, B-C is a diameter, but there are many nodes at mid-distance between them, and only this module is the center of the system.
+
+### 17
+
+Here is a sequential version of ABC-Center. It is an iterative algorithm. At the beginning, all the modules are candidate. Then, at every step, a random candidate module A is selected. Then, B the farthest candidate node from A is selected. And then C, the farthest candidate from B is selected. The candidate at mid-distance between B and C remain candidate for the next iteration. This process is reapeted until less than 2 nodes remain candidate. Finally, when less than 2 nodes are candidate, one of them is randomly chosen as the center.
+
+In terms of distributed computations, the single-source shortest paths are computed using distributed breadth first network traversals.
+
+### 18
+
+Let's see on two examples how ABC-Center behaves in practice.
+
+This system is composed of 60 modules. First, A is randomly elected.
+
+Then, B the farthest candidate from A is elected.
+
+Then, C the farthest one from B.
+
+The node at mid-distance between B-C is elected as the center and ABC-Center terminates.
+
+### 19
+
+Let's have a look to a more complex example. This is a cube of 64 modules.
+
+During the first iteration, A1 B1 and C1 are selected and all these nodes are candidate for the second iteration.
+
+The same process is repeated again in the second iteration and all the modules are candidate for the third iteration.
+
+The same process is repeated again. These two modules remain candidate.
+
+And finally one of these two modules is elected by our algorithm. Note that here again,  the elected node belong to the exact center.
+
+Note that we have just seen that the number of steps increases with the width of the diameter and thus ABC-Center is more efficient in low-degree networks.
+
+### 20
+
+Now, I will present you evaluation results. Our methodology is to first evaluate ABC-Center algorithm on hardware to show that it works on actual hardware, then I show that we can accurately simulate our algorithm on our simulator. Then, I present results obtain using simulations.
+
+### 21
+
+This is ABC-Center on a square of 49 Blinky Blocks. ABC-Center uses two iterations. Moreover, ABC-Center is robust to network dynamics. We add a line of 11 modules and it triggers a new execution of ABC-Center to find the new center.
+
+### 22
+
+To accurately simulate the BB we incorporated in VisibleSim statistical models of both the processing and communication times.
+
+To show that VisibleSim accurately simulate the Blinky Blocks we compare the execution time on the hardware and VisibleSim on different types of systems of different sizes. The relative average simulation precision is higher than 95 percents in all these cases.
+
+Thus our simulator is accurate. We trust it to perform simulations on large-scale ensembles. 
+
+### 23
+
+We will now present our simulation setup.
+
+We use VisibleSim and compare our algorithms with other algorithms, namely the election of a random node, an exhaustive method and some approximation algorithms.
+
+We use random compact systems such as this system. They are compact but may contain holes and eccentricities. We use systems composed of 10 to 25,000 modules. Our results are statistics computed on multiple independent runs.
+
+We evaluate the accuracy and the cost of our algorithms in terms of time, communication and memory usage.
+
+### 24
+
+We measure the relative accuracy of our algorithm using this formula.
+
+Our algorithms are in color while the other one are in gray.
+
+This is the accuracy versus the size of the system.
+
+The most precise algorithms with an accuracy greater than 87 percent are on the left and while the other are on the right.
+
+We observe that our algorithms are the most precise approximation algorithms. They all have a center accuracy greater than 85 percent.
+
+### 25
+
+Now, let's have a look to the execution time. First, the time required to compute an exact solution is huge. Two of our algorithms need more time than existing approximation algorithms but our algorithms are more precise. This is the cost of accuracy. Our other algorithm needs similar time than the other algorithms.
+
+Our algorithm have a good time-precision trade-off
+
+### 26
+
+This is the average number of messages sent per module versus the size of the system. We see that our algorithms are in-between the other algorithms. Also our algorithm that was faster than the two others, needs more messages than them.
+
+Our algorithms definitely have a good cost-accuracy trade-off.
+
+### 27
+
+Finally, this is the maximum memory usage per node of the different algorithms. It takes into account the cost of message storage in queues and the algorithm-specific variables.
+
+The algorithm with a memory footprint lower than 500 bytes are on the left the other are on the right. We observe that our algorithms have a resonnable memory footprint. Moreover, the exhaustive method has a very large memory footprint. It uses up to 1mb on a single node which is far too much.
+
+### 28
+
+To conclude this part, I have proposed 3 efficient distributed algorithms.
+
+They are robust to network dynamics
+
+I provide a formal anlysis of their performance in terms of time message and memory.
+
+I performed evaluation on hardware with systems composed of up to 64 modules and using simulations with larger-scale systems. Our algorithms are the most precise approximation algortihms and have a good cost-accuracy trade-off.
+
+Of course my work has some limits: first the accuracy was evaluated using experiments only. There are probably bad cases but I haven't find them. We wonder if our algorithm works in other types of networks. They are inspired from external-graph analysis algorithms used to study large-scale real-work networks such as the YahooWeb or AS networks. Thus our algorithms may work on this kind of networks.
+
+### 29
+
+I will now present you the work I've done on Time Synchronization, using a similar outline as previously.
+
+### 30
+
+Our problem is to maintain a global timescale in the system. That is to say make all modules display the same time. 
+
+It is challenging because clock are imperfect. They are noisy and drift apart from each other. Moreover, synchronization is difficult because we have to compensate for random communication delays. When a module sends a synchronization message to antoher one to inform it that it is time t, it is not time t anymore when that module receives the message.
+
+### 31
+
+Time synchronization is needed to achieve distributed coordination. An example of application is this bitmap scroller. The modules cooperatively scrolls the text femto-st. They have to be synchronized.
+
+If they are not synchronized, the text is not well displayed. Below is the same program running without synchronization. At the beginning modules start with the same time 0, and then the clock progressively drift apart. After 20 minutes, it is not possible to see the text femto-st anymore.
+
+### 32
+
+We illustrate our protocol on the BB but our protocol is suitable for any ensembles where devices have nearly identical clock that can be low precision and bad resolution. For instance the Blinky Blocks have a 1 percent precision clock and a 1ms resolution. Meaning that modules are drifting apart ...
+
+We assume modules communicate using n2n comm and that the ensembles can be large and have a large diameter. Moreover we consider fairly stable systems.
+
+Failry is a little bit vague. We simply consider that dynamics are only occacionnal, for instance, we can split our distributed scroller. Then, the two systems will be independently synchronized. And then merge the two systems later.
+
+### 33
+
+There are many diff sync protocols proposed for diff domains.
+
+Our contribution is to propose a protocol for modular robotics that use a central time master for a better sync precision, a breadth first tree that reflects the real graph topology to reduce the communication overhead, the best suite method to compensate for comm delays depending on the target platofrm and a linear model to compensate for clock skew
+
+### 34
+
+My contribution is to propose the Modular Robot .. MRTP
+
+### 35
+
+It works as follow. First, it elects a central time master using an external algorithm. Then it constructs the synchronization tree.
+
+After that, the system is periodically synchronized using the best-suited method to compensate for comm delays and a linear model to comp. for clock skew.
+
+### 36
+
+I present one method to compensate for comm delays, namely the predictive mehtod. This is a naive method but it is in average the most accurate one in our target system as we will see.
+
+The time to exchange a message can be decomposed in different times that are lister here. The send, access and receive time are non-deterministic, they include times spend in the queue that depends on the network and cpu load. The transmission, propagation and reception times are more deterministic. We name the sum of them the transfer time. In the PRED method, the transfer time is assumed to be predicatble and the global time upon reception is the equal to the global time at ts plus t transfer.
+
+### 37
+
+I will now show you my experimental evaluation of MRTP.
+
+I use the BB, so the first thing to do is to determine what is the best method to compensate for the comm delays on this platform.
+
+Then, as in the previous section, I'll show you results on hardware, then I'll show you that VisibleSim can be used to simulate the BB behavior and finally study our protocol on large-scale systems using simulations
+
+### 38
+
+The transfer time for a message can be computed using round-trip time measurements. We have the formula here.
+
+We observed that the transfer rate is highly predicatble. A frame of 21 bytes approximately takes 6ms to be transferred. Hence, we use this formula in the PRED method
+
+### 39
+
+We study the precision global-time dissemination error over multiple hops for 3 different methods to compensate for the comm delays. We oberserve that the PRED method i sthe most acurate one. Moreover, it uses a single message per hop. Hence, we use the PRED method in our evaluation.
+
+### 40
+
+We are here interesting in determining what is the radius the time master can synchronize.
+
+In this experiment, 28 modules are connected in a line. The TM is placed at an extermity such that the farthest module is at 27 hops from the TM. Modules periodically change their color and we record them using a 40ms resolution camera.
+
+We observe that whenever a color change starts, all the modules have change their color in the next image 40ms later.
+
+Hence, the TM synchronizes modules in a 27-hop radius to less than 40ms.
+
+By extrapolation, it means that MRTP can synchronize a ball system with a 27-hop radius to less than 40ms if the TM is placed at the center. This system is composed of 27,775 modules.
+
+We'll use simulations to show it.
+
+### 41
+
+We also study the impact of the sync period on the sync period using hardware. We use that system. We show that the synchronization error increases with the sync period, but that MRTP can synchronize this system to some milliseconds even with a period of 60seconds. Hence, the sync period to use depends on the desired precision. A long period uses less system resources.
+
+### 42
+
+In order to accurately simulate sync protocols, we integrated statistical models of the clock, communication time and simulation time into VS.
+
+We perform the experiments made on hardware using VisibleSim and show that simulation results match the hardware ones, for both the average and the distribution.
+
+### 43
+
+This is our simulation setup.
+
+We use VS to compare MRTP with different sync protocols ported to fit our simulation models. I won't detail the changes here, but they are clearly listed in the manuscript.
+
+We compare our protocol to decentralized protocols and to master/slave ones that use a tree or do not use any logicial topology.
+
+The experiments are performed on 3 compact systems composed of 200 to 27 700 modules and have a diameter of up to 54 hops.
+
+We consider the following scenario. The system is first left unsynchronized for 1hour. Then, the system synchronizes itself using a period of 5s during 1 hour. We measure the maximum pairwise sync error every 3 sec. The maximum pairwise sync error is the time diff between any two clocks in the system.
+
+We consider the convergence time, the synchronization precision and the communication cost.
+
+### 44
+
+Let's start with the convergence time.
+
+These are the three systems we consider.
+
+Plots represent the maximum pairwise sync error overtime during the last hour.
+
+When synchronization starts, modules have drifter apart of about 40seconds.
+
+Decentralized protocols are slower to converge. In the largest system, ATS need 30 minutes to converge. Centralized algorithms converges quickly and are more precise.
+
+MRTP is in red. It is the fastest one to converge and the more precise.
+
+### 45
+
+This is the average maximum synchronization error after convergence. We see that MRTP is the more precise protocol. It synchronizes the 27,775 module system to 17ms in average.
+
+### 46
+
+This is the average number of messages per node. MRTP is the most communication efficient algorithm.
+
+The election of the TM and the construction of the time master are compensated for in less than 1h.
+
+### 47
+
+In this section, I presented MRTP.
+
+I evaluated my protocol both on hardware and using simulations.
+
+I showed that it is the most precise existing protocol and that it has a fast convergence.
+
+I showed that it can synchronize a 27,775 module system with a 54-hop diameter to less than 20ms.
+
+Moreover, I showed that it uses less messages in compact systems than the other algorithms.
+
+However, MRTP has a limit, it targets fairly stable systems.
+
+### 48
+
+Now, I will present you the work I've done on the last topic, the self-reconfiguration.
+
+### 49
+
+The problem I address is the following.
+
+Given an initial shape, a goal shape and some mechanical contraints, how to reconfigure at robot of 2D catoms.
+
+It is challenging because it requires ditributed coordination to efficiently reach the goal shape. We have to prevent collisions and deadlock. Moreover, it should be somehow efficient in terms of time, number of both motions and messages.
+
+One of the motivation is programmable matter.
+
+### 50
+
+Here, we assume modules are in a hexagonal lattice and that they know their coordinates.
+
+Moreover, we assume async n2n comm. We also assume async motions with some mechanical constraints. For instance, in this system, this module can not escape this cavitity.
+
+Collision have to be prevented using communications, we do not assume any presence sensor. Moreover, we do not consider failures here.
+
+Finally, every single module has to know the goal shape.
+
+### 51
+
+There is several related work. Our contribution is to propose an algorithm to self-reconfigure 2d compact shapes into 2d compact ones with strong mechanical constraints. To avoid collision, modules use messages and all the modules move in one direction only.
+
+### 53
+
+There are some admissibility conditions on the shape. Here are for instance valid initial/goal shapes while these ones are not valid because they contains a hole, they do not intersect and the peripheral path is to thin.
+
+### 54
+
+I briefly present my algorithm C2SR.
+
+Modules are moving in a stream on the periphery. To prevent collisions, modules move in one direction only and maintain an empty space between each other.
+
+Globally, the initial shape is deconstructed layer-by-layer and the goal one is contructed next to the initial one, layer by layer.
+
+Our algorithm uses a state machine with only 5 states and 3 transition rules. Our algorithm is decentralized and uses local interactions.
+
+### 55
+
+I will show you some experiment results. In this section, we only use simulations.
+
+We study our algorithm on 4 different shapes with different size from 10 to 10 thousnad modules. We use realistic communication and motion models.
+
+We evaluate the effectiveness of our algorithm and its efficiency in terms of time, motion and communication.
+
+### 57
+
+First, I show the effectiveness of our algorithm using a simulation with a system of 1 thousand modules.
+
+It works well, our algorithm can self-reconfigure it.
+
+### 58
+
+This is the avg execution time versus the size of the system.
+
+REgardeless of the goal shape, the execution time is linear to the number of modules. Moreover, is is highly predictable as the standard-deviation is not even visible.
+
+The slope of the line gives the reconfiguration speed. Our algorithm fills 1 goal cell/second.
+
+### 59
+
+This is the average total number of motions versurs the size of the system. The number of motion is also highly predictable.
+
+### 60
+
+This is the average number of messages per module vs the size of the system. It is also predictable. We observe that the average is far away from the maximum value, meaning that a few modules at most send a lot more messages.
+
+These modules send more messages. Indeed, many module are passing on them and communicate with them.
+
+### 61
+
+I have proposed the C2SR algorithm.
+It is effective and scalable. It works in systems with more than 10,000 modules. It has nice properties such as an execution time that is linear in the size of the goal shape and highly predictable number of motions and messages.
+
+My work has some limits. The correctness and the performance were only experimentally shown. Moreover, C2SR targets only 2D systems.
+
+### 62
+
+It's time for conclusion.
+
+### 63
+
+In my thesis, I have proposed three primitives to help the coordination of large-scale robotic ensembles.
+
+I proposed three efficient algorithms for distributed centrality-based leader election. I proposed MRTP, a precise time synchroziation protocol and C2SR a self-reconfiguration algorithm for 2D Catoms.
+
+There is room for improvement. I list here some future works.
+
+Regarding my work on centrality, it would be nice to establish proofs on the accuracy of our algorithms or at least find bad cases to highlight the worst/best cases of our algorithm. Second, it would be intersting to deploy them on other types of networks. Third, they should be adapted to more handle network dynamics more efficiently.
+
+Regarding my work on time synchronization. It would be interesting to deploy MRTP in ensembles with more precise clocks. Moreover, to address heterogeneous systems, it could be a good idea to combine centrlaity and clock stability to select the time master. Moreover, it we plan to study time sync in more dynamic ensembles for instance to perform synchronized self-reconfigurations. MRTP will be too costly in these conditions because dynamics will cause constant re-election of the TM. For now PulseSync can be used.
+
+Regarding the work on self-reconfigruation it would be nice to demonstrate the correctness of C2SR and to demonstrate the execution time linearity. It is also interesting to study other mechanical constraints and 3D systems.

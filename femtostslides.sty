@@ -1,0 +1,272 @@
+% FemtoSTSlides: an unofficial Femto-ST theme for LaTex-Beamer!
+%
+% based on ensislides from Matthieu Moy:
+% 	http://www-verimag.imag.fr/~moy/ensitools/beamer/
+%
+% For use with LaTeX-beamer:
+%
+% \documentclass{beamer}
+% \usepackage{femtostslides}
+% ...
+\newcommand{\fileFolder}{./femtostslides-files}
+
+\newcommand{\logoDefaultCmd}{\includegraphics[keepaspectratio=true,width=60pt]{\fileFolder /fig/femtost.png}}
+\newcommand{\logoCmd}{\logoDefaultCmd}
+\newcommand{\setLogoCmd}[1]{\renewcommand{\logoCmd}{#1}}
+
+\newcommand{\logoFirstPageCmd}{\logoDefaultCmd}
+\newcommand{\setLogoFirstPageCmd}[1]{\renewcommand{\logoFirstPageCmd}{#1}}
+
+\newcommand{\subsectionOutlineFrame}{
+  \mode<beamer>{
+    \begin{frame} \frametitle{\ensiflanguage{french}{Sommaire}{Subsection Outline}}
+     \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/hide/hide]
+    \end{frame}
+  }
+}
+
+\usepackage{etoolbox}
+
+\usepackage{pgfpages}
+\mode<handout>{
+  % \pgfpagesuselayout{4 on 1}[a4paper,landscape,border shrink=5mm]
+  \pgfpagesuselayout{8 on 1}[a4paper,border shrink=5mm]
+}
+
+\usetheme[secheader]{Boadilla}
+  
+% Center the frametitle
+\setbeamertemplate{frametitle}[default][center]
+
+% \setbeamercovered{transparent=40}
+\setbeamercovered{invisible}
+
+% Remove navigation bar
+\setbeamertemplate{navigation symbols}{}%[only frame symbol]
+
+% Lightweight navigation bar on top of the slide
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}[ht=2.25ex]{author in head/foot}
+    %\vskip2pt\insertsectionnavigationhorizontal{\paperwidth}{}{}\vskip2pt
+    \centering
+    \inserttitle{}
+  \end{beamercolorbox}%
+}
+
+% Replace the star in itemize list for subsubitems by a square
+\setbeamertemplate{itemize subsubitem}[square]
+
+% Lightweight foot line. The arrows and slide numbers are clickable
+% to help navigation (especially when using animated slides).
+\setbeamertemplate{footline}
+{    
+  {
+    \ifnum\value{framenumber}=1
+    \begin{center}
+      \logoFirstPageCmd
+    \end{center}
+    \else
+    \begin{flushright}
+      \logoCmd
+    \end{flushright}
+    \fi
+  } 
+  %\kern 5pt
+  %\vspace{-8pt}
+  \leavevmode
+  \hbox{%
+    \begin{beamercolorbox}[wd=.40\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor~~(\insertshortinstitute)
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.27\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+      \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+      \hyperlinkframeendprev{ $<$ }\hyperlinkframeend{\insertframenumber{} /
+        \inserttotalframenumber}\hyperlinkframestartnext{ $>$ }\hspace*{2ex}
+      %\hyperlinkframeendprev{ $<$ }\hyperlinkframeend{\insertpagenumber{} /
+      %        \insertpresentationendpage}\hyperlinkframestartnext{ $>$ }\hspace*{2ex}
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+%\setbeamertemplate{footline}[nologo]
+%{    
+%  {
+%    \ifnum\value{framenumber}=1
+%    \begin{center}
+%      \logoFirstPageCmd
+%    \end{center}
+%    \else
+%    \begin{flushright}
+%      \logoCmd
+%    \end{flushright}
+%    \fi
+%  } 
+%  %\kern 5pt
+%  %\vspace{-8pt}
+%  \leavevmode
+%  \hbox{%
+%    \begin{beamercolorbox}[wd=.40\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+%      \usebeamerfont{author in head/foot}\insertshortauthor~~(\insertshortinstitute)
+%    \end{beamercolorbox}%
+%    \begin{beamercolorbox}[wd=.27\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+%      \usebeamerfont{title in head/foot}\insertshorttitle
+%    \end{beamercolorbox}%
+%    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+%      \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+%      \hyperlinkframeendprev{ $<$ }\hyperlinkframeend{\insertframenumber{} /
+%        \inserttotalframenumber}\hyperlinkframestartnext{ $>$ }\hspace*{2ex} 
+%    \end{beamercolorbox}}%
+%  \vskip0pt%
+%}
+
+% Light green theme
+\mode<beamer>{
+  \definecolor{femtostdarkblue}{RGB}{20,91,155}
+  \definecolor{femtostmidblue}{RGB}{12,125,189}
+  \definecolor{femtostlightblue}{RGB}{3,158,222}
+  
+}
+\mode<handout>{
+  \definecolor{femtostdarkblue}{RGB}{20,91,155}
+  \definecolor{femtostmidblue}{RGB}{12,125,189}
+  \definecolor{femtostlightblue}{RGB}{3,158,222}
+}
+
+\setbeamercolor{structure}{fg=femtostdarkblue,bg=femtostlightblue}
+\usecolortheme{dolphin}
+% White navigationbar
+\setbeamercolor{section in head/foot}{fg=white,bg=femtostdarkblue}
+% Shaded a bit lighter than usual.
+\setbeamertemplate{section in head/foot shaded}[default][40]
+\setbeamertemplate{section in toc shaded}[default][40]
+% red, but not too red (especially for color blind people)
+\setbeamercolor{alerted text}{fg=red!50!black!90!green}
+
+% French vs English (borrowed from babel, but we redefine it here in
+% case babel isn't loaded).
+\def\ensiflanguage#1#2#3{%
+\expandafter\ifx\csname l@#1\endcsname\relax
+\@nolanerr{#1}%
+\else
+\ifnum\csname l@#1\endcsname=\language #2%
+\else#3\fi
+\fi}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \begin{center}
+  \bigskip
+  {
+  \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+  }
+  \bigskip\smallskip
+  \usebeamerfont{author}\insertauthor\par 
+  \bigskip
+  \usebeamerfont{institute}\insertinstitute\par
+  %\bigskip
+  %\insertdate\par
+  %\smallskip
+  %\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par
+  %\bigskip
+  \end{center}
+}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each section/subsection:
+
+%\makeatletter
+%\patchcmd{\beamer@sectionintoc}
+%  {\vfill}
+%  {\vskip\itemsep}
+%  {}
+%  {}
+%\makeatother
+
+\makeatletter
+\patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.75em}{}{}
+\makeatother
+
+
+\newif\iflattersubsect
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{\ensiflanguage{french}{Sommaire}{Section Outline}}
+%  	{\small
+    %\tableofcontents[currentsection,hideothersubsections]
+    
+      \tableofcontents[
+        sectionstyle=show/shaded,
+        subsectionstyle=show/show/hide,
+        subsubsectionstyle=hide/hide/hide/hide
+        ]
+%   \tableofcontents[currentsection,currentsubsection]
+%  	}
+  \end{frame}
+  \lattersubsectfalse
+}
+
+%\AtBeginSubsection[]
+%{
+%  \iflattersubsect
+%  \mode<beamer>{
+%    \begin{frame} \frametitle{\ensiflanguage{french}{Sommaire}{Subsection Outline}}
+%     \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/shaded/shaded]
+%    \end{frame}
+%  }
+%  \fi
+%  \lattersubsecttrue
+%}
+
+%\AtBeginSubsubsection[]
+%{
+%  \mode<beamer>{
+%    \begin{frame} \frametitle{\ensiflanguage{french}{Sommaire}{Subsection Outline}}
+%     \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/show/shaded/shaded]
+%    \end{frame}
+%  }
+%}
+
+% to cheat on frame numbers.
+\newcommand{\noframenumber}%
+{\makeatletter\global\advance\c@framenumber by-1\relax\makeatother}
+
+\usepackage{array}
+\newcommand{\question}[1]{%
+  \begin{block}{Question}
+    \begin{tabular}{m{1cm}m{.7\hsize}}
+      \includegraphics[width=.8cm]{\fileFolder /fig/blue-bits-icons-256x256/1_009.png} & #1 \\
+    \end{tabular}
+  \end{block}
+}
+
+\newcommand{\warning}[1]{\includegraphics[width=.8cm]{\fileFolder /fig/blue-bits-icons-256x256/1_007.png}~~#1}
+
+\usepackage{listings}
+
+\definecolor{trefle}{rgb}{0,0.5,0}
+\definecolor{moka}{rgb}{0.5,0.25,0}
+\definecolor{minuit}{rgb}{0,0,0.5}
+
+\mode<beamer>
+{
+   \lstset{commentstyle=\color{moka}\textit}
+   \lstset{keywordstyle=\color{minuit}\textbf}
+   \lstset{identifierstyle=\color{trefle}}
+}
+\mode<handout>
+{
+   \lstset{commentstyle=\textit}
+   \lstset{keywordstyle=\textbf}
+}
+
+\lstset{basicstyle=\ttfamily}
+\lstset{showstringspaces=false}
+
+% PDF meta-data (mostly useless)
+\subject{FEMTO-ST Presentation}

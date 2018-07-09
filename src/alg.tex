@@ -1,0 +1,42 @@
+\let\argmax\relax
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\newcommand{\MyAlgoCapSpace}{0.5em}
+\newcommand{\MyAlgoDecSpace}{0em}
+\newcommand{\MyAlgoIndentSpace}{0em}
+\newcommand{\mySpaceInterval}{0em}
+\newcommand{\decMarginLength}{1.3em}
+
+\SetAlFnt{\footnotesize}
+\SetAlCapSkip{1em}
+
+\SetKwData{Left}{left}
+\SetKwData{This}{this}
+\SetKwData{Up}{up}
+\SetKwFunction{Union}{Union}
+\SetKwFunction{FindCompress}{FindCompress}
+\SetKwFor{ForEach}{for each}{do}{end}
+\SetKwProg{Fn}{Function}{:}{end}		
+
+\SetKwInOut{Settings}{Settings}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}  
+\SetKwInOut{Variants}{Variants}
+\SetKwInOut{Primitives}{Primitive(s)}
+\SetKwInOut{Variables}{Local Variables}  
+
+\newcommand{\myAlgParam}[2]{
+	\begin{figure}[#1]
+		\IncMargin{\decMarginLength}
+		\removelatexerror	
+		\begin{algorithm}[H]
+			#2
+		\end{algorithm}
+		\DecMargin{\decMarginLength}
+	\end{figure}
+}
+
+\newcommand{\myAlg}[1]{
+	\myAlgParam{!h}{#1}
+}

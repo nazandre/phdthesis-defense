@@ -161,7 +161,7 @@ _minted*
 *.pax
 
 # pdfpcnotes
-*.pdfpc
+#*.pdfpc
 
 # sagetex
 *.sagetex.sage

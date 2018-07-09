@@ -1,0 +1,208 @@
+\documentclass{beamer}
+
+%\usepackage{bookmark}
+%\documentclass[handout]{beamer}
+
+\usepackage{bibentry}
+\usepackage{femtostslides}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{multirow}
+
+\usepackage{dirtytalk}
+\usepackage{subfigure}
+
+\usepackage{setspace}
+
+\usepackage{etoolbox}
+
+\newtoggle{videoWarning}% enable warning for the videos
+\togglefalse{videoWarning}
+%\toggletrue{videoWarning}
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark,fit,shapes.geometric,calc}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\setbeamercovered{transparent}
+
+\usepackage[absolute,overlay]{textpos}
+\usepackage{extrabeamercmds}
+
+\usepackage{adjustbox} % for \adjincludegraphics
+
+\usepackage[boxed]{algorithm2e}
+\makeatletter
+\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+\makeatother
+
+\makeatletter
+\let\oldnl\nl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
+\makeatother
+
+\usepackage{amsthm}
+\newtheorem{myRule}{Rule}
+
+\definecolor{goodGreen}{RGB}{0,153,0}  % light green
+\newcommand{\bad}[1]{\textcolor{red}{#1}}
+\newcommand{\good}[1]{\textcolor{goodGreen}{#1}}
+
+%%% Alg
+\input{src/alg.tex}
+
+\makeatletter
+\def\beamer@startmycovered{%
+	\def\opaqueness<##1>##2{%
+		\only<##1>{%
+			\beamer@actions{%
+				\expandafter\xdef\csname beamer@oldcolorhook%
+				\the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
+				\expandafter\xdef\csname beamer@oldpgfextension%
+				\the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
+				{\globalcolorstrue\colorlet{beamer@freeze\the\beamer@coveringdepth}{bg}}%
+				\xdef\beamer@colorhook{!##2!beamer@freeze%
+					\the\beamer@coveringdepth\beamer@colorhook}%
+				\gdef\beamer@pgfextension{!##2opaque}%
+				\color{.}%
+			}%
+			{%
+				\xdef\beamer@colorhook{\csname beamer@oldcolorhook%
+					\the\beamer@coveringdepth\endcsname}%
+				\xdef\beamer@pgfextension{\csname beamer@oldpgfextension%
+					\the\beamer@coveringdepth\endcsname}%
+				\color{.}%
+	}}}%
+	\ifnum\beamer@slideinframe<\beamer@minimum%ok, at beginning
+	{%
+		\beamer@saveanother%
+		\advance\beamer@minimum by-\beamer@slideinframe%
+		\beamer@slideinframe=\beamer@minimum%
+		\beamer@uncoverbeforeactions%
+		\beamer@restoreanother%
+	}%
+	\else%
+	{%
+		\beamer@saveanother%
+		\advance\beamer@slideinframe by-\beamer@minimum%
+		\beamer@uncoverafteractions%
+		\beamer@restoreanother%
+	}%
+	\fi%
+	\beamer@do%
+	%  }%
+}
+
+\long\def\beamer@makemycovered#1{\beamer@startmycovered#1\beamer@endcovered}
+\def\mycover{%
+	\alt{\beamer@makemycovered}{\beamer@fakeinvisible}}
+\def\c@slideinframe{\beamer@slideinframe}
+\makeatother
+
+\newcommand{\remarkColor}{femtostdarkblue}
+
+\newcommand{\remark}[1]{
+	\begin{center}
+	 \textcolor{\remarkColor}{$\implies$ #1}
+	\end{center}
+}
+	
+\title[Thesis Defense]{Distributed Algorithms for Large-scale Robotic Ensembles: Centrality, Synchronization and Self-reconfiguration}
+
+\subtitle{Thesis Defense}
+
+\author[A. Naz]{André Naz\inst{1}\\Thesis Defense\\\insertdate\\~\\\underline{Supervisors:} Julien Bourgeois, Seth C. Goldstein and Benoît Piranda} 
+%\\~\\\underline{Jury members:} Kay Römer, Roger Wattenhofer, Nikolaus Correll}
+\institute[{UBFC-UFC-FEMTO-ST}]{\inst{1} Univ. Bourgogne Franche-Comté, University of Franche-Comté\\FEMTO-ST Institute, CNRS}
+
+\date{December, 4 2017}
+
+\setLogoFirstPageCmd{\vspace{-12pt}\hspace*{-3.5cm}\includegraphics[scale=0.5]{fig/logos/logo-first-page.pdf}\vspace{-12pt}}
+
+% Disable all logos!
+\setLogoCmd{}%\includegraphics[scale=0.5]{fig/logos/logo.pdf}\kern 5pt\vspace{-10pt}}
+
+\newcommand{\noLogo}[1]{{\setLogoCmd{}#1}}
+
+\begin{document}
+
+\begin{frame}
+
+\iftoggle{videoWarning}{
+   \vspace{-3em}
+}{}
+
+   \titlepage
+
+\iftoggle{videoWarning}{  
+   \begin{textblock*}{0.97\paperwidth}(0.03\paperwidth,0.675\paperheight)
+   	\begin{center}	
+   		\begin{columns}[c]
+   			\begin{column}{0.02\textwidth}
+   				\centering
+   				%\vspace*{-1em}
+   				\warning{}
+   			\end{column}
+   			\begin{column}{.98\textwidth}
+   				\small
+   				\centering			
+   				\textcolor{\remarkColor}{The original presentation contains videos that are not embedded in this PDF.\\Please visit~\url{https://github.com/nazandre/phdthesis-defense}\\to visualize the videos.}
+   			\end{column}
+   		\end{columns}
+   	\end{center}
+   \end{textblock*}
+}{}
+   
+  \begin{textblock*}{0.25\paperwidth}(0.725\paperwidth,0.835\paperheight)
+  \begin{center}
+  \tiny Funded by the ANR/RGC (contracts ANR-12-IS02-0004-01 and 3-ZG1F)
+  \end{center}
+  \end{textblock*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\ensiflanguage{french}{Sommaire}{Outline}}
+  \tableofcontents[subsectionstyle=hide,subsubsectionstyle=hide]
+\end{frame}
+
+{ 
+\AtBeginSection[]{}
+\section{Introduction}
+
+\input{src/context.tex}
+
+\input{src/problem.tex}
+}
+
+\section{Research Environment: Hardware and Simulation Tools}
+
+\input{src/hardware.tex}
+
+\section{Centrality-based Leader Election}
+
+\input{src/centrality.tex}
+
+\section{Time Synchronization}
+
+\input{src/synchronization.tex}
+
+\section{Self-Reconfiguration}
+
+\input{src/reconfiguration.tex}
+
+\section{Conclusion and Future Works}
+
+\input{src/conclusion.tex}
+
+\input{src/questions.tex}
+
+\input{src/acknowledgments.tex}
+
+\end{document}
